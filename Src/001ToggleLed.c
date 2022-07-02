@@ -1,0 +1,71 @@
+/*
+ * 002LedToggle_Button.c
+ *
+ *  Created on: 18-Mar-2022
+ *      Author: sai31
+ */
+#include "stm32f407xx.h"
+#include "string.h"
+#include "stm32f407xx_gpio_driver.h"
+
+void delay()
+{
+	for(volatile uint32_t i=0;i< 500000;i++);
+}
+
+int main()
+{
+	GPIO_Handle_T GPIOLED_D4;
+	GPIO_Handle_T GPIOLED_D3;
+	GPIO_Handle_T GPIOLED_D5;
+	GPIO_Handle_T GPIOLED_D6;
+
+	GPIOLED_D4.pGPIOx = GPIOD;
+	GPIOLED_D4.pGPIOHandle.GPIO_PinNumber = GPIO_PIN_NUM_12;
+	GPIOLED_D4.pGPIOHandle.GPIO_PinMode =	GPIO_MODE_OUT;
+	GPIOLED_D4.pGPIOHandle.GPIO_PinSpeed =	GPIO_SPEED_FAST;
+	GPIOLED_D4.pGPIOHandle.GPIO_PinOpType = GPIO_OP_TYPE_PUSHPULL;
+	GPIOLED_D4.pGPIOHandle.GPIO_PinPuPdControl = GPIO_NO_PUPD;
+
+	GPIOLED_D3.pGPIOx = GPIOD;
+	GPIOLED_D3.pGPIOHandle.GPIO_PinNumber = GPIO_PIN_NUM_13;
+	GPIOLED_D3.pGPIOHandle.GPIO_PinMode =	GPIO_MODE_OUT;
+	GPIOLED_D3.pGPIOHandle.GPIO_PinSpeed =	GPIO_SPEED_FAST;
+	GPIOLED_D3.pGPIOHandle.GPIO_PinOpType = GPIO_OP_TYPE_PUSHPULL;
+	GPIOLED_D3.pGPIOHandle.GPIO_PinPuPdControl = GPIO_NO_PUPD;
+
+	GPIOLED_D5.pGPIOx = GPIOD;
+	GPIOLED_D5.pGPIOHandle.GPIO_PinNumber = GPIO_PIN_NUM_14;
+	GPIOLED_D5.pGPIOHandle.GPIO_PinMode =	GPIO_MODE_OUT;
+	GPIOLED_D5.pGPIOHandle.GPIO_PinSpeed =	GPIO_SPEED_FAST;
+	GPIOLED_D5.pGPIOHandle.GPIO_PinOpType = GPIO_OP_TYPE_PUSHPULL;
+	GPIOLED_D5.pGPIOHandle.GPIO_PinPuPdControl = GPIO_NO_PUPD;
+
+	GPIOLED_D6.pGPIOx = GPIOD;
+	GPIOLED_D6.pGPIOHandle.GPIO_PinNumber = GPIO_PIN_NUM_15;
+	GPIOLED_D6.pGPIOHandle.GPIO_PinMode =	GPIO_MODE_OUT;
+	GPIOLED_D6.pGPIOHandle.GPIO_PinSpeed =	GPIO_SPEED_FAST;
+	GPIOLED_D6.pGPIOHandle.GPIO_PinOpType = GPIO_OP_TYPE_PUSHPULL;
+	GPIOLED_D6.pGPIOHandle.GPIO_PinPuPdControl = GPIO_NO_PUPD;
+
+	GPIO_PClkControl(GPIOD,ENABLE);
+
+	GPIO_Init(&GPIOLED_D4);
+	GPIO_Init(&GPIOLED_D3);
+	GPIO_Init(&GPIOLED_D5);
+	GPIO_Init(&GPIOLED_D6);
+
+	while(1)
+	{
+		GPIO_WriteToOutputPin(GPIOD,GPIO_PIN_NUM_12,SET);
+		GPIO_WriteToOutputPin(GPIOD,GPIO_PIN_NUM_13,SET);
+		GPIO_WriteToOutputPin(GPIOD,GPIO_PIN_NUM_14,SET);
+		GPIO_WriteToOutputPin(GPIOD,GPIO_PIN_NUM_15,SET);
+		delay();
+	}
+
+	return 0;
+
+}
+
+
