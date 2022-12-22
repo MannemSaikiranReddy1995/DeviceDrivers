@@ -1,0 +1,21 @@
+# options: https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+BasedOnStyle: LLVM
+Standard: Auto
+ColumnLimit: 120
+IndentWidth: 4
+ContinuationIndentWidth: 8
+PointerAlignment: Left
+TabWidth: 4
+BreakBeforeBraces: Allman
+BinPackArguments: false
+BinPackParameters : false
+# does (int) x instead of (int)x
+SpaceAfterCStyleCast: true
+# spaces, not tabs!
+UseTab: Never
+# if (x) doStuff()  is not allowed, bad style
+AllowShortIfStatementsOnASingleLine: false
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true
+AlignTrailingComments: true
+UseCRLF: false
