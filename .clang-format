@@ -18,4 +18,5 @@ AllowShortIfStatementsOnASingleLine: false
 AlignConsecutiveAssignments: true
 AlignConsecutiveDeclarations: true
 AlignTrailingComments: true
+AlignConsecutiveMacros: true
 UseCRLF: false
