@@ -55,6 +55,7 @@
 #define GPIOI_BASEADDRESS (AHB1PERIPH_BASE + 0X2000)
 #define GPIOJ_BASEADDRESS (AHB1PERIPH_BASE + 0X2400)
 #define GPIOK_BASEADDRESS (AHB1PERIPH_BASE + 0X2800)
+#define RCC_BASEADDRESS   (AHB1PERIPH_BASE + 0X3800)
 
 /*
  * Base addresses of peripherals hanging on APB1 bus
@@ -84,8 +85,6 @@
 #define EXTI_BASEADDRESS   (APB2PERIPH_BASE + 0X3C00)
 #define SYSCFG_BASEADDRESS (APB2PERIPH_BASE + 0X3800)
 
-#define RCC_BASEADDRESS (AHB1PERIPH_BASE + 0X3800)
-
 #define IRQ_NO_EXTI0     6U
 #define IRQ_NO_EXTI1     7U
 #define IRQ_NO_EXTI2     8U
@@ -113,7 +112,7 @@
 
 /******************************peripheral registers definition structures*************************/
 /*
- * Register definitions are specific to Microcontroller. Please check the device before defining the strucyure.
+ * Register definitions are specific to Microcontroller. Please check the device before defining the structure.
  */
 
 typedef struct
@@ -189,6 +188,19 @@ typedef struct
     __vo uint32_t CMPCR;
 } SYSCFG_Register_Def_T;
 
+typedef struct
+{
+    __vo uint32_t SPI_CR1;
+    __vo uint32_t SPI_CR2;
+    __vo uint32_t SPI_SR;
+    __vo uint32_t SPI_DR;
+    __vo uint32_t SPI_CRCPR;
+    __vo uint32_t SPI_RXCRCR;
+    __vo uint32_t SPI_TXCRCR;
+    __vo uint32_t SPI_I2SCFGR;
+    __vo uint32_t SPI_I2SPR;
+} SPI_Register_Def_T;
+
 /*
  * Peripheral definition ( base address type casted to xxx_Reg_Def_T)
  */
@@ -208,6 +220,10 @@ typedef struct
 #define RCC    ((RCC_Register_Def_T*) RCC_BASEADDRESS)
 #define EXTI   ((EXTI_Register_Def_T*) EXTI_BASEADDRESS)
 #define SYSCFG ((SYSCFG_Register_Def_T*) SYSCFG_BASEADDRESS)
+
+#define SPI1 ((SPI_Register_Def_T*) SPI1_BASEADDRESS)
+#define SPI2 ((SPI_Register_Def_T*) SPI2_BASEADDRESS)
+#define SPI3 ((SPI_Register_Def_T*) SPI3_BASEADDRESS)
 
 /*
  * GPIO Clock Enable Macros
@@ -308,7 +324,7 @@ typedef struct
 #define SYSCFG_PCLK_DS() (RCC->APB2ENR |= (0 << 14))
 
 /*
- * SYSCFG Clock Disable Macros
+ * GPIO Base address to Port Code Conversion
  */
 #define GPIO_BASEADDRESS_TO_PORT_CODE(x)                                                                               \
     ((x == GPIOA)   ? 0                                                                                                \
@@ -321,7 +337,9 @@ typedef struct
      : (x == GPIOH) ? 7                                                                                                \
      : (x == GPIOI) ? 8                                                                                                \
                     : 0)
-
+/*
+ * GPIO Register Reset
+ */
 #define GPIOA_REG_RESET()                                                                                              \
     do                                                                                                                 \
     {                                                                                                                  \
@@ -387,6 +405,27 @@ typedef struct
     {                                                                                                                  \
         (RCC->AHB1RSTR |= (1 << 10));                                                                                  \
         (RCC->AHB1RSTR &= ~(1 << 10));                                                                                 \
+    } while (0)
+
+#define SPI1_REG_RESET()                                                                                               \
+    do                                                                                                                 \
+    {                                                                                                                  \
+        (RCC->APB2RSTR |= (1 << 12));                                                                                  \
+        (RCC->APB2RSTR &= ~(1 << 12));                                                                                 \
+    } while (0)
+
+#define SPI2_REG_RESET()                                                                                               \
+    do                                                                                                                 \
+    {                                                                                                                  \
+        (RCC->APB1RSTR |= (1 << 14));                                                                                  \
+        (RCC->APB1RSTR &= ~(1 << 14));                                                                                 \
+    } while (0)
+
+#define SPI3_REG_RESET()                                                                                               \
+    do                                                                                                                 \
+    {                                                                                                                  \
+        (RCC->APB1RSTR |= (1 << 15));                                                                                  \
+        (RCC->APB1RSTR &= ~(1 << 15));                                                                                 \
     } while (0)
 
 #endif /* INC_STM32F407XX_H_ */

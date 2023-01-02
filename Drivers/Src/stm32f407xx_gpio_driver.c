@@ -173,7 +173,7 @@ void GPIO_Init(GPIO_Handle_T* pToGPIOHandle)
         }
         else
         {
-            /*dO nOTHING*/
+            /*Do Nothing*/
         }
 
         // Enable Sys config Clock
@@ -306,17 +306,10 @@ void GPIO_DeInit(GPIO_Register_Def_T* pGPIOx)
 
 uint8_t GPIO_ReadFromInputPin(GPIO_Register_Def_T* pGPIOx, uint8_t PinNumber)
 {
-    uint8_t value;
-    value = ((pGPIOx->IDR >> PinNumber) & 0x00000001U);
-    return value;
+    return (uint8_t)((pGPIOx->IDR >> PinNumber) & 0x00000001U);
 }
 
-uint16_t GPIO_ReadFromInputPort(GPIO_Register_Def_T* pGPIOx)
-{
-    uint16_t value;
-    value = (uint16_t)(pGPIOx->IDR);
-    return value;
-}
+uint16_t GPIO_ReadFromInputPort(GPIO_Register_Def_T* pGPIOx) { return (uint16_t)(pGPIOx->IDR); }
 
 void GPIO_WriteToOutputPin(GPIO_Register_Def_T* pGPIOx, uint8_t PinNumber, uint8_t value)
 {
